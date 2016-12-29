@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Represents a vote
  * 
- * @author Nector
+ * @author rav3
  */
 final public class Vote {
  

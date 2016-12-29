@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Describes a mail address
  *
- * @author Nector
+ * @author rav3
  */
 final public class MailAddress {
     

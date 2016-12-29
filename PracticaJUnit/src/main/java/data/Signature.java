@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * Describes a digital signature
  *
- * @author Nector
+ * @author rav3
  */
 final public class Signature {
     
