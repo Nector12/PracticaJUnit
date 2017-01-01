@@ -38,13 +38,13 @@ public class ActivationCardTest {
     }
     
     @Test
-    public void eraseCodeOfActivationCard() {
+    public void activationCardIsNotActive() {
         activationCard.erase();
         assertTrue(!activationCard.isActive());
     }
     
     @Test
-    public void eraseCodeIsNull() {
+    public void erasedCodeIsNull() {
         activationCard.erase();
         String expected = null;
         String actual = activationCard.getCode();
