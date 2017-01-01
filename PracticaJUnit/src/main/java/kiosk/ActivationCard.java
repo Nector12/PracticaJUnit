@@ -16,6 +16,10 @@ public class ActivationCard {
         this.active = true;
     }
     
+    public String getCode() {
+        return this.activationCode;
+    }
+    
     public boolean isActive() {
         return this.active;
     }
@@ -37,10 +41,11 @@ public class ActivationCard {
             return false;
         }
         final ActivationCard other = (ActivationCard) obj;
-        if (!Objects.equals(this.activationCode, other.activationCode)) {
+        if (this.activationCode.equals(other.activationCode)) {
+            return true;
+        } else {
             return false;
         }
-        return true;
     }
 
 }
