@@ -8,7 +8,7 @@ import java.util.Objects;
  * @author rav3
  */
 final public class MailAddress {
-    
+
     private final String address;
 
     public MailAddress(String address) {
@@ -46,7 +46,5 @@ final public class MailAddress {
     public String toString() {
         return "MailAddress{" + "address=" + address + '}';
     }
-    
-    
-    
+
 }
