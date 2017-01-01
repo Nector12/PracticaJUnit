@@ -16,7 +16,7 @@ public class PartyTest {
      * Test of hashCode method, of class Party.
      */
     @Test
-    public void same_hashcode_for_equal_parties() {
+    public void sameHashcodeForEqualParties() {
         Party party = new Party("Party");
         Party sameParty = new Party("Party");
         assertEquals(party.hashCode(), sameParty.hashCode());

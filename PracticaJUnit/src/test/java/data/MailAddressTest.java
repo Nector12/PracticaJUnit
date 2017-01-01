@@ -16,7 +16,7 @@ public class MailAddressTest {
      * Test of hashCode method, of class MailAddress.
      */
     @Test
-    public void same_hashcode_for_equal_addresses() {
+    public void sameHashcodeForEqualAddresses() {
         MailAddress address = new MailAddress("address");
         MailAddress sameAddress = new MailAddress("address");
         assertEquals(address.hashCode(), sameAddress.hashCode());

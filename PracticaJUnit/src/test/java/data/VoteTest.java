@@ -16,7 +16,7 @@ public class VoteTest {
      * Test of hashCode method, of class Vote.
      */
     @Test
-    public void same_hashcode_for_equal_votes() {
+    public void sameHashcodeForEqualVotes() {
         Vote vote = new Vote("Party 1");
         Vote sameVote = new Vote("Party 1");
         assertEquals(vote.hashCode(), sameVote.hashCode());

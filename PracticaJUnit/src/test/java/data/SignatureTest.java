@@ -17,7 +17,7 @@ public class SignatureTest {
      * Test of hashCode method, of class Signature.
      */
     @Test
-    public void same_hashcode_for_equal_signatures() {
+    public void sameHashcodeForEqualSignatures() {
         byte[] signatureBytes = new byte[10];
         new Random().nextBytes(signatureBytes);
         Signature signature = new Signature(signatureBytes);
