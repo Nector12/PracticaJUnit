@@ -15,14 +15,14 @@ public class VotingMachineActivateEmisionTests {
     public VotingMachineActivateEmisionTests() {
         votingMachine = new VotingMachine();
     }
-    
+
     @Test
     public void correctlyActivatedEmission() {
         votingMachine.setValidationService(new ValidationServiceOkay());
-        votingMachine.activateEmission(new ActivationCard("activation_code"));
+        votingMachine.activateEmission(new ActivationCard("valid_code"));
         assertTrue(votingMachine.isActivated());
     }
-    
+
     @Test
     public void errorActivatingEmissionInvalidCode() {
         votingMachine.setValidationService(new ValidationServiceWrong());
@@ -32,25 +32,25 @@ public class VotingMachineActivateEmisionTests {
 
     /*
     Mock implementations of ValidationService
-    */
-    private static class ValidationServiceOkay 
+     */
+    private static class ValidationServiceOkay
             extends ForbiddenValidationService {
 
         @Override
         public boolean validate(ActivationCard card) {
             return true;
         }
-        
+
     }
 
-    private static class ValidationServiceWrong 
+    private static class ValidationServiceWrong
             extends ForbiddenValidationService {
 
         @Override
         public boolean validate(ActivationCard card) {
             return false;
         }
-        
+
     }
-    
+
 }
