@@ -24,6 +24,7 @@ public class VotingMachine {
     private MailerService mailerService;
 
     private boolean activated;
+    private ActivationCard cardForVote;
 
     public VotingMachine() {
         this.activated = false;
@@ -57,17 +58,24 @@ public class VotingMachine {
         }
         if (validationService.validate(card)) {
             // Card is valid
+            this.cardForVote = card;
             this.activated = true;
         }
     }
 
     public boolean canVote() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return this.activated;
     }
 
     public void vote(Vote vote)
             throws IllegalStateException {
-        throw new UnsupportedOperationException("Not implemented yet");
+        if(!canVote())
+            throw new IllegalStateException("Can't vote, machine not activated");
+        
+        this.activated = false;
+        this.votesDB.registerVote(vote);
+        this.votePrinter.print(vote);
+        this.cardForVote.erase();
     }
 
     public void sendReceipt(MailAddress mailAddress)
