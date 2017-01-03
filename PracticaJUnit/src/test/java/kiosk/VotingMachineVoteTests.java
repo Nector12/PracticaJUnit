@@ -1,12 +1,11 @@
 package kiosk;
 
 import data.Vote;
-import java.util.ArrayList;
-import java.util.List;
 import mocks.ForbiddenValidationService;
 import mocks.ForbiddenVotesDB;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
 import services.VotePrinter;
 
 /**
@@ -26,8 +25,17 @@ public class VotingMachineVoteTests {
         votingMachine = new VotingMachine();
     }
     
+    
     @Test
     public void voteRegisteredCorrectly() {
+        Vote vote = new Vote("Party 1");
+        VotesDBOkay votesDB = new VotesDBOkay();
+        votingMachine.setValidationService(new ValidationServiceOkay());
+        votingMachine.setVotesDB(votesDB);
+        votingMachine.setVotePrinter(new VotePrinterFake());
+        votingMachine.activateEmission(new ActivationCard("activation_code"));
+        votingMachine.vote(vote);
+        assertEquals(vote, votesDB.vote);
     }
     
     @Test(expected = IllegalStateException.class)
