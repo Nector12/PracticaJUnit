@@ -27,29 +27,29 @@ public class VotingMachineVoteTests {
     
     @Test
     public void voteRegisteredCorrectly() {
-        Vote vote = new Vote("Party 1");
+        Vote vote = new Vote("any_party");
         VotesDBOkay votesDB = new VotesDBOkay();
         votingMachine.setValidationService(new ValidationServiceOkay());
         votingMachine.setVotesDB(votesDB);
         votingMachine.setVotePrinter(new VotePrinterFake());
-        votingMachine.activateEmission(new ActivationCard("activation_code"));
+        votingMachine.activateEmission(new ActivationCard("valid_code"));
         votingMachine.vote(vote);
         assertEquals(vote, votesDB.vote);
     }
     
     @Test(expected = IllegalStateException.class)
     public void cannotVoteIfMachineNotActivated() {
-        Vote vote = new Vote("Party 1");
+        Vote vote = new Vote("any_party");
         votingMachine.vote(vote);
     }
     
     @Test(expected = IllegalStateException.class)
     public void cannotVote2Times() {
-        Vote vote = new Vote("Party 1");
+        Vote vote = new Vote("any_party");
         votingMachine.setValidationService(new ValidationServiceOkay());
         votingMachine.setVotesDB(new VotesDBOkay());
         votingMachine.setVotePrinter(new VotePrinterFake());
-        votingMachine.activateEmission(new ActivationCard("activation_code"));
+        votingMachine.activateEmission(new ActivationCard("valid_code"));
         votingMachine.vote(vote);
         votingMachine.vote(vote);
     }
@@ -63,6 +63,17 @@ public class VotingMachineVoteTests {
         votingMachine.activateEmission(card);
         votingMachine.vote(new Vote("any_party"));
         assertNull(card.getCode());
+    }
+    
+    @Test
+    public void voteIsPrinted() {
+        VotePrinterFake votePrinter = new VotePrinterFake();
+        votingMachine.setValidationService(new ValidationServiceOkay());
+        votingMachine.setVotesDB(new VotesDBOkay());
+        votingMachine.setVotePrinter(votePrinter);
+        votingMachine.activateEmission(new ActivationCard("valid_code"));
+        votingMachine.vote(new Vote("any_party"));
+        assertTrue(votePrinter.printed);
     }
 
     /*
