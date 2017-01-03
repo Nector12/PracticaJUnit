@@ -28,7 +28,7 @@ public class VotingMachineVoteTests {
     @Test
     public void voteRegisteredCorrectly() {
         Vote vote = new Vote("any_party");
-        VotesDBOkay votesDB = new VotesDBOkay();
+        VotesDBFake votesDB = new VotesDBFake();
         votingMachine.setValidationService(new ValidationServiceOkay());
         votingMachine.setVotesDB(votesDB);
         votingMachine.setVotePrinter(new VotePrinterFake());
@@ -47,7 +47,7 @@ public class VotingMachineVoteTests {
     public void cannotVote2Times() {
         Vote vote = new Vote("any_party");
         votingMachine.setValidationService(new ValidationServiceOkay());
-        votingMachine.setVotesDB(new VotesDBOkay());
+        votingMachine.setVotesDB(new VotesDBFake());
         votingMachine.setVotePrinter(new VotePrinterFake());
         votingMachine.activateEmission(new ActivationCard("valid_code"));
         votingMachine.vote(vote);
@@ -58,7 +58,7 @@ public class VotingMachineVoteTests {
     public void codeFromActivationCardErased() {
         ActivationCard card = new ActivationCard("valid_code");
         votingMachine.setValidationService(new ValidationServiceOkay());
-        votingMachine.setVotesDB(new VotesDBOkay());
+        votingMachine.setVotesDB(new VotesDBFake());
         votingMachine.setVotePrinter(new VotePrinterFake());
         votingMachine.activateEmission(card);
         votingMachine.vote(new Vote("any_party"));
@@ -69,27 +69,13 @@ public class VotingMachineVoteTests {
     public void voteIsPrintedOneTime() {
         VotePrinterFake votePrinter = new VotePrinterFake();
         votingMachine.setValidationService(new ValidationServiceOkay());
-        votingMachine.setVotesDB(new VotesDBOkay());
+        votingMachine.setVotesDB(new VotesDBFake());
         votingMachine.setVotePrinter(votePrinter);
         votingMachine.activateEmission(new ActivationCard("valid_code"));
         votingMachine.vote(new Vote("any_party"));
         assertEquals(votePrinter.printed, 1);
     }
-
-    @Test(expected = IllegalStateException.class)
-    public void cannotVote2TimesAndOnlyFirstVoteIsPrinted() {
-        Vote vote1 = new Vote("Party_1");
-        Vote vote2 = new Vote("Party_2");
-        VotePrinterFake votePrinter = new VotePrinterFake();
-        votingMachine.setValidationService(new ValidationServiceOkay());
-        votingMachine.setVotesDB(new VotesDBOkay());
-        votingMachine.setVotePrinter(votePrinter);
-        votingMachine.activateEmission(new ActivationCard("valid_code"));
-        votingMachine.vote(vote1);
-        votingMachine.vote(vote2);
-        assertEquals(votePrinter.printed, 1);
-    }
-
+    
     /*
     Mocks for services used in tests
      */
@@ -108,7 +94,7 @@ public class VotingMachineVoteTests {
 
     }
 
-    private static class VotesDBOkay
+    private static class VotesDBFake
             extends ForbiddenVotesDB {
 
         Vote vote;
