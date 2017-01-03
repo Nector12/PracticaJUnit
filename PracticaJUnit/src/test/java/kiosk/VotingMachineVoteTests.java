@@ -75,7 +75,7 @@ public class VotingMachineVoteTests {
         votingMachine.vote(new Vote("any_party"));
         assertEquals(votePrinter.printed, 1);
     }
-    
+
     /*
     Mocks for services used in tests
      */

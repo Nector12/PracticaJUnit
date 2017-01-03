@@ -15,24 +15,24 @@ public class VotingMachineCanVoteTests {
 
     public VotingMachineCanVoteTests() {
     }
-    
+
     @Before
     public void setUpVotingMachine() {
         votingMachine = new VotingMachine();
         votingMachine.setValidationService(new ValidationServiceOkay());
     }
-    
+
     @Test
     public void voterCanVote() {
         votingMachine.activateEmission(new ActivationCard("valid_code"));
         assertTrue(votingMachine.canVote());
     }
-    
+
     @Test
     public void voterCannotVoteEmissionNotActivated() {
         assertFalse(votingMachine.canVote());
     }
-    
+
     private static class ValidationServiceOkay
             extends ForbiddenValidationService {
 
@@ -42,5 +42,5 @@ public class VotingMachineCanVoteTests {
         }
 
     }
-    
+
 }
