@@ -72,10 +72,11 @@ public class VotingMachine {
         if(!canVote())
             throw new IllegalStateException("Can't vote, machine not activated");
         
-        this.activated = false;
-        this.votesDB.registerVote(vote);
         this.votePrinter.print(vote);
-        this.cardForVote.erase();
+        this.votesDB.registerVote(vote);
+        this.validationService.deactivate(cardForVote);
+        this.activated = false;
+        
     }
 
     public void sendReceipt(MailAddress mailAddress)
