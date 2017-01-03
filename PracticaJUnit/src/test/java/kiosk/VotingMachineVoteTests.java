@@ -66,14 +66,14 @@ public class VotingMachineVoteTests {
     }
     
     @Test
-    public void voteIsPrinted() {
+    public void voteIsPrintedOneTime() {
         VotePrinterFake votePrinter = new VotePrinterFake();
         votingMachine.setValidationService(new ValidationServiceOkay());
         votingMachine.setVotesDB(new VotesDBOkay());
         votingMachine.setVotePrinter(votePrinter);
         votingMachine.activateEmission(new ActivationCard("valid_code"));
         votingMachine.vote(new Vote("any_party"));
-        assertTrue(votePrinter.printed);
+        assertEquals(votePrinter.printed, 1);
     }
 
     /*
@@ -109,11 +109,11 @@ public class VotingMachineVoteTests {
     private static class VotePrinterFake
             implements VotePrinter {
 
-        boolean printed = false;
+        int printed = 0;
         
         @Override
         public void print(Vote vote) {
-            this.printed = true;
+            this.printed++;
         }
     }
 }
