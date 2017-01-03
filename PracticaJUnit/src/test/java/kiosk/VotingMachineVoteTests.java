@@ -25,7 +25,6 @@ public class VotingMachineVoteTests {
         votingMachine = new VotingMachine();
     }
     
-    
     @Test
     public void voteRegisteredCorrectly() {
         Vote vote = new Vote("Party 1");
@@ -36,6 +35,12 @@ public class VotingMachineVoteTests {
         votingMachine.activateEmission(new ActivationCard("activation_code"));
         votingMachine.vote(vote);
         assertEquals(vote, votesDB.vote);
+    }
+    
+    @Test(expected = IllegalStateException.class)
+    public void cannotVoteIfMachineNotActivated() {
+        Vote vote = new Vote("Party 1");
+        votingMachine.vote(vote);
     }
     
     @Test(expected = IllegalStateException.class)
