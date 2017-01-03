@@ -15,6 +15,6 @@ import org.junit.runners.Suite;
                     VotingMachineCanVoteTests.class,
                     VotingMachineVoteTests.class,
                     VotingMachineSendReceiptTests.class})
-public class VotingMachineTestSuite {
+public class VotingMachineSuiteTest {
     
 }
