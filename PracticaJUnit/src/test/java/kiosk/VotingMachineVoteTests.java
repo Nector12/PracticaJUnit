@@ -53,6 +53,17 @@ public class VotingMachineVoteTests {
         votingMachine.vote(vote);
         votingMachine.vote(vote);
     }
+    
+    @Test
+    public void codeFromActivationCardErased() {
+        ActivationCard card = new ActivationCard("valid_code");
+        votingMachine.setValidationService(new ValidationServiceOkay());
+        votingMachine.setVotesDB(new VotesDBOkay());
+        votingMachine.setVotePrinter(new VotePrinterFake());
+        votingMachine.activateEmission(card);
+        votingMachine.vote(new Vote("any_party"));
+        assertNull(card.getCode());
+    }
 
     /*
     Mocks for services used in tests
@@ -63,6 +74,11 @@ public class VotingMachineVoteTests {
         @Override
         public boolean validate(ActivationCard card) {
             return true;
+        }
+        
+        @Override
+        public void deactivate(ActivationCard card) {
+            card.erase();
         }
 
     }
