@@ -1,6 +1,6 @@
 package kiosk;
 
-import mocks.ForbiddenValidationService;
+import mocks.ValidationServiceOkay;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -31,16 +31,6 @@ public class VotingMachineCanVoteTests {
     @Test
     public void voterCannotVoteEmissionNotActivated() {
         assertFalse(votingMachine.canVote());
-    }
-
-    private static class ValidationServiceOkay
-            extends ForbiddenValidationService {
-
-        @Override
-        public boolean validate(ActivationCard card) {
-            return true;
-        }
-
     }
 
 }

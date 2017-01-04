@@ -1,6 +1,7 @@
 package kiosk;
 
-import mocks.ForbiddenValidationService;
+import mocks.ValidationServiceOkay;
+import mocks.ValidationServiceWrong;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -28,29 +29,6 @@ public class VotingMachineActivateEmisionTests {
         votingMachine.setValidationService(new ValidationServiceWrong());
         votingMachine.activateEmission(new ActivationCard("invalid_code"));
         assertFalse(votingMachine.canVote());
-    }
-
-    /*
-    Mock implementations of ValidationService
-     */
-    private static class ValidationServiceOkay
-            extends ForbiddenValidationService {
-
-        @Override
-        public boolean validate(ActivationCard card) {
-            return true;
-        }
-
-    }
-
-    private static class ValidationServiceWrong
-            extends ForbiddenValidationService {
-
-        @Override
-        public boolean validate(ActivationCard card) {
-            return false;
-        }
-
     }
 
 }

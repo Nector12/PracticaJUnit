@@ -1,8 +1,9 @@
 package kiosk;
 
 import data.Vote;
-import mocks.ForbiddenValidationService;
-import mocks.ForbiddenVotesDB;
+import mocks.ValidationServiceOkay;
+import mocks.VotePrinterFake;
+import mocks.VotesDBFake;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -76,44 +77,4 @@ public class VotingMachineVoteTests {
         assertEquals(votePrinter.printed, 1);
     }
 
-    /*
-    Mocks for services used in tests
-     */
-    private static class ValidationServiceOkay
-            extends ForbiddenValidationService {
-
-        @Override
-        public boolean validate(ActivationCard card) {
-            return true;
-        }
-
-        @Override
-        public void deactivate(ActivationCard card) {
-            card.erase();
-        }
-
-    }
-
-    private static class VotesDBFake
-            extends ForbiddenVotesDB {
-
-        Vote vote;
-
-        @Override
-        public void registerVote(Vote vote) {
-            this.vote = vote;
-        }
-
-    }
-
-    private static class VotePrinterFake
-            implements VotePrinter {
-
-        int printed = 0;
-
-        @Override
-        public void print(Vote vote) {
-            this.printed++;
-        }
-    }
 }
