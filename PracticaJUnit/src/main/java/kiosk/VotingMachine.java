@@ -1,6 +1,7 @@
 package kiosk;
 
 import data.MailAddress;
+import data.Signature;
 import data.Vote;
 import services.MailerService;
 import services.SignatureService;
@@ -24,10 +25,13 @@ public class VotingMachine {
     private MailerService mailerService;
 
     private boolean activated;
+    private boolean hasVoted;
     private ActivationCard cardForVote;
+    private Vote vote;
 
     public VotingMachine() {
         this.activated = false;
+        this.hasVoted = false;
     }
 
     public void setValidationService(ValidationService validationService) {
@@ -72,20 +76,25 @@ public class VotingMachine {
         if(!canVote())
             throw new IllegalStateException("Can't vote, machine not activated");
         
-        this.votePrinter.print(vote);
-        this.votesDB.registerVote(vote);
+        this.vote = vote;
+        this.votePrinter.print(this.vote);
+        this.votesDB.registerVote(this.vote);
         this.validationService.deactivate(cardForVote);
         this.activated = false;
+        this.hasVoted = true;
         
     }
 
     public void sendReceipt(MailAddress mailAddress)
             throws IllegalStateException {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
-
-    public boolean isActivated() {
-        return activated;
+        if(!this.activated) {
+            throw new IllegalStateException("Can't send receipt, machine not activated");
+        } else if(!this.hasVoted) {
+            throw new IllegalStateException("Can't send receipt, not voted yet");
+        }
+        
+        Signature signature = this.signatureService.sign(this.vote);
+        this.mailerService.send(mailAddress, signature);
     }
 
 }
