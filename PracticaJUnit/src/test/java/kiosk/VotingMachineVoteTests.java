@@ -93,6 +93,8 @@ public class VotingMachineVoteTests {
         votingMachine.activateEmission(
                 new ActivationCard("another_valid_corde"));
         votingMachine.vote(vote2);
+        
+        // Check number of votes registered
         if(votesDB.nVotes < 2) {
             fail("Less than 2 votes registered");
         } else if(votesDB.nVotes > 2) {
