@@ -20,14 +20,14 @@ public class VotingMachineActivateEmisionTests {
     public void correctlyActivatedEmission() {
         votingMachine.setValidationService(new ValidationServiceOkay());
         votingMachine.activateEmission(new ActivationCard("valid_code"));
-        assertTrue(votingMachine.isActivated());
+        assertTrue(votingMachine.canVote());
     }
 
     @Test
     public void errorActivatingEmissionInvalidCode() {
         votingMachine.setValidationService(new ValidationServiceWrong());
         votingMachine.activateEmission(new ActivationCard("invalid_code"));
-        assertFalse(votingMachine.isActivated());
+        assertFalse(votingMachine.canVote());
     }
 
     /*
