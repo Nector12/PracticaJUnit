@@ -10,17 +10,15 @@ import services.MailerService;
  */
 /**
  * Mock for MailerService
- * Stores # of sent mails, the mailAddress and the signature sent.
+ * Stores the mailAddress and the signature sent.
  */
 public class MailerServiceFake implements MailerService {
 
-    public int nSent = 0;
     public MailAddress address;
     public Signature signature;
     
     @Override
     public void send(MailAddress address, Signature signature) {
-        this.nSent++;
         this.address = address;
         this.signature = signature;
     }
