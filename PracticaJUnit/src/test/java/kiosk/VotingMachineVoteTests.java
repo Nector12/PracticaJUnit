@@ -7,7 +7,6 @@ import mocks.VotesDBFake;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import services.VotePrinter;
 
 /**
  *
@@ -35,7 +34,7 @@ public class VotingMachineVoteTests {
         votingMachine.setVotePrinter(new VotePrinterFake());
         votingMachine.activateEmission(new ActivationCard("valid_code"));
         votingMachine.vote(vote);
-        assertEquals(vote, votesDB.vote);
+        assertEquals(vote, votesDB.lastVote);
     }
 
     @Test(expected = IllegalStateException.class)
@@ -75,6 +74,31 @@ public class VotingMachineVoteTests {
         votingMachine.activateEmission(new ActivationCard("valid_code"));
         votingMachine.vote(new Vote("any_party"));
         assertEquals(votePrinter.printed, 1);
+    }
+    
+    @Test
+    public void consecutiveVaildVotes() {
+        VotesDBFake votesDB = new VotesDBFake();
+        votingMachine.setValidationService(new ValidationServiceOkay());
+        votingMachine.setVotesDB(votesDB);
+        votingMachine.setVotePrinter(new VotePrinterFake());
+        
+        // First Vote
+        votingMachine.activateEmission(
+                new ActivationCard("valid_code"));
+        votingMachine.vote(new Vote("any_party"));
+        
+        // Second Vote
+        Vote vote2 = new Vote("any_party");
+        votingMachine.activateEmission(
+                new ActivationCard("another_valid_corde"));
+        votingMachine.vote(vote2);
+        if(votesDB.nVotes < 2) {
+            fail("Less than 2 votes registered");
+        } else if(votesDB.nVotes > 2) {
+            fail("More than 2 votes registered");
+        }
+        assertEquals(vote2, votesDB.lastVote);
     }
 
 }
