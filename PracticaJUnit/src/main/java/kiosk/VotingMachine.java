@@ -64,6 +64,7 @@ public class VotingMachine {
             // Card is valid
             this.cardForVote = card;
             this.activated = true;
+            this.hasVoted = false;
         }
     }
 
@@ -87,7 +88,7 @@ public class VotingMachine {
 
     public void sendReceipt(MailAddress mailAddress)
             throws IllegalStateException {
-        if(!this.activated) {
+        if(!this.activated && !this.hasVoted) {
             throw new IllegalStateException("Can't send receipt, machine not activated");
         } else if(!this.hasVoted) {
             throw new IllegalStateException("Can't send receipt, not voted yet");
