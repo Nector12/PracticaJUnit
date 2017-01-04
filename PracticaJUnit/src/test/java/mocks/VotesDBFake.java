@@ -14,11 +14,13 @@ import services.VotesDB;
  */
 public class VotesDBFake implements VotesDB {
 
-    public Vote vote;
+    public Vote lastVote;
+    public int nVotes = 0;
 
     @Override
     public void registerVote(Vote vote) {
-        this.vote = vote;
+        this.lastVote = vote;
+        this.nVotes++;
     }
 
     @Override
