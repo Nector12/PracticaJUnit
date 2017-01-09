@@ -1,7 +1,6 @@
 package mocks;
 
 import data.Vote;
-import services.VotePrinter;
 
 /**
  *
@@ -11,7 +10,7 @@ import services.VotePrinter;
  * Mock of VotePrinter service
  * Used to test if the vote is printed
  */
-public class VotePrinterFake implements VotePrinter {
+public class VotePrinterFake extends ForbiddenVotePrinter {
 
     public int printed = 0;
 

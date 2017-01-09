@@ -1,7 +1,6 @@
 package mocks;
 
 import kiosk.ActivationCard;
-import services.ValidationService;
 
 /**
  *
@@ -10,7 +9,7 @@ import services.ValidationService;
 /**
  * Used to test valid activationCards
  */
-public class ValidationServiceOkay implements ValidationService {
+public class ValidationServiceOkay extends ForbiddenValidationService {
 
     @Override
     public boolean validate(ActivationCard card) {

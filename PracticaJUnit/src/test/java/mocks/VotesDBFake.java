@@ -1,8 +1,6 @@
 package mocks;
 
 import data.Vote;
-import java.util.List;
-import services.VotesDB;
 
 /**
  *
@@ -12,7 +10,7 @@ import services.VotesDB;
  * Mock of VotesDB
  * Used to test if the correct Vote is registered
  */
-public class VotesDBFake implements VotesDB {
+public class VotesDBFake extends ForbiddenVotesDB {
 
     public Vote lastVote;
     public int nVotes = 0;
@@ -21,11 +19,6 @@ public class VotesDBFake implements VotesDB {
     public void registerVote(Vote vote) {
         this.lastVote = vote;
         this.nVotes++;
-    }
-
-    @Override
-    public List<Vote> getVotes() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

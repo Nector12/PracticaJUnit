@@ -2,7 +2,6 @@ package mocks;
 
 import data.Signature;
 import data.Vote;
-import services.SignatureService;
 
 /**
  *
@@ -12,7 +11,7 @@ import services.SignatureService;
  * Mock for SignatureService
  * Simply returns a new signature for testing
  */
-public class SignatureServiceFake implements SignatureService {
+public class SignatureServiceFake extends ForbiddenSignatureService {
 
     public Vote vote;
     

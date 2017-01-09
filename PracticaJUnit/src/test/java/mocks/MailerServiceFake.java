@@ -2,7 +2,6 @@ package mocks;
 
 import data.MailAddress;
 import data.Signature;
-import services.MailerService;
 
 /**
  *
@@ -12,7 +11,7 @@ import services.MailerService;
  * Mock for MailerService
  * Stores the mailAddress and the signature sent.
  */
-public class MailerServiceFake implements MailerService {
+public class MailerServiceFake extends ForbiddenMailerService {
 
     public MailAddress address;
     public Signature signature;
