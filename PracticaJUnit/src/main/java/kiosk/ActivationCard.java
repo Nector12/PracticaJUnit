@@ -1,6 +1,7 @@
 package kiosk;
 
-import java.util.Objects;
+import data.IrisScan;
+import java.util.Optional;
 
 /**
  *
@@ -10,10 +11,20 @@ public class ActivationCard {
     
     private String activationCode;
     private boolean active;
+    private Optional<IrisScan> irisScan;  
 
     public ActivationCard(String activationCode) {
         this.activationCode = activationCode;
         this.active = true;
+        this.irisScan = Optional.empty();
+    }
+
+    public void setIrisScan(IrisScan irisScan) {
+        this.irisScan = Optional.of(irisScan);
+    }
+
+    public Optional<IrisScan> getIrisScan() {
+        return irisScan;
     }
     
     public String getCode() {
