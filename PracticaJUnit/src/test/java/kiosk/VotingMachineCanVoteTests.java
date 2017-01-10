@@ -1,5 +1,6 @@
 package kiosk;
 
+import mocks.ForbiddenIrisScanner;
 import mocks.ForbiddenMailerService;
 import mocks.ForbiddenSignatureService;
 import mocks.ForbiddenVotePrinter;
@@ -28,6 +29,7 @@ public class VotingMachineCanVoteTests {
         votingMachine.setVotesDB(new ForbiddenVotesDB());
         votingMachine.setSignatureService(new ForbiddenSignatureService());
         votingMachine.setMailerService(new ForbiddenMailerService());
+        votingMachine.setIrisScanner(new ForbiddenIrisScanner());
     }
 
     @Test
@@ -39,6 +41,13 @@ public class VotingMachineCanVoteTests {
     @Test
     public void voterCannotVoteEmissionNotActivated() {
         assertFalse(votingMachine.canVote());
+    }
+    
+    @Test(expected = IllegalStateException.class)
+    public void cannotActivateTwice() {
+        ActivationCard card = new ActivationCard("valid_code");
+        votingMachine.activateEmission(card);
+        votingMachine.activateEmission(card);
     }
 
 }
