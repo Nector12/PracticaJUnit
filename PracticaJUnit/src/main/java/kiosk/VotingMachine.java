@@ -1,8 +1,11 @@
 package kiosk;
 
+import data.IrisScan;
 import data.MailAddress;
 import data.Signature;
 import data.Vote;
+import java.util.Arrays;
+import services.IrisScanner;
 import services.MailerService;
 import services.SignatureService;
 import services.ValidationService;
@@ -23,6 +26,7 @@ public class VotingMachine {
     private VotesDB votesDB;
     private SignatureService signatureService;
     private MailerService mailerService;
+    private IrisScanner irisScanner;
 
     private boolean activated;
     private boolean hasVoted;
@@ -54,17 +58,24 @@ public class VotingMachine {
         this.mailerService = mailerService;
     }
 
+    public void setIrisScanner(IrisScanner irisScanner) {
+        this.irisScanner = irisScanner;
+    }
+
     public void activateEmission(ActivationCard card)
             throws IllegalStateException {
 
         if (this.activated) {
             throw new IllegalStateException("VotingMachine already activated.");
         }
-        if (validationService.validate(card)) {
+        if (card.getIrisScan().isPresent()) {
+            // Biometric code detected
+            if (biometricValidation(card)) {
+                activateMachine(card);
+            }
+        } else if (validationService.validate(card)) {
             // Card is valid
-            this.cardForVote = card;
-            this.activated = true;
-            this.hasVoted = false;
+            activateMachine(card);
         }
     }
 
@@ -74,28 +85,44 @@ public class VotingMachine {
 
     public void vote(Vote vote)
             throws IllegalStateException {
-        if(!canVote())
+        if (!canVote()) {
             throw new IllegalStateException("Can't vote, machine not activated");
-        
+        }
+
         this.vote = vote;
         this.votePrinter.print(this.vote);
         this.votesDB.registerVote(this.vote);
         this.validationService.deactivate(cardForVote);
         this.activated = false;
         this.hasVoted = true;
-        
+
     }
 
     public void sendReceipt(MailAddress mailAddress)
             throws IllegalStateException {
-        if(!this.activated && !this.hasVoted) {
+        if (!this.activated && !this.hasVoted) {
             throw new IllegalStateException("Can't send receipt, machine not activated");
-        } else if(!this.hasVoted) {
+        } else if (!this.hasVoted) {
             throw new IllegalStateException("Can't send receipt, not voted yet");
         }
-        
+
         Signature signature = this.signatureService.sign(this.vote);
         this.mailerService.send(mailAddress, signature);
+    }
+
+    private boolean biometricValidation(ActivationCard card) {
+        IrisScan cardIris = card.getIrisScan().get();
+        IrisScan scannedIris = this.irisScanner.scan();
+        byte[] cardCode = cardIris.getIrisCode();
+        byte[] scannedCode = scannedIris.getIrisCode();
+        boolean equalCodes = Arrays.equals(cardCode, scannedCode);
+        return equalCodes;
+    }
+
+    private void activateMachine(ActivationCard card) {
+        this.cardForVote = card;
+        this.activated = true;
+        this.hasVoted = false;
     }
 
 }
