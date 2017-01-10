@@ -1,5 +1,9 @@
 package kiosk;
 
+import mocks.ForbiddenMailerService;
+import mocks.ForbiddenSignatureService;
+import mocks.ForbiddenVotePrinter;
+import mocks.ForbiddenVotesDB;
 import mocks.ValidationServiceOkay;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -20,6 +24,10 @@ public class VotingMachineCanVoteTests {
     public void setUpVotingMachine() {
         votingMachine = new VotingMachine();
         votingMachine.setValidationService(new ValidationServiceOkay());
+        votingMachine.setVotePrinter(new ForbiddenVotePrinter());
+        votingMachine.setVotesDB(new ForbiddenVotesDB());
+        votingMachine.setSignatureService(new ForbiddenSignatureService());
+        votingMachine.setMailerService(new ForbiddenMailerService());
     }
 
     @Test

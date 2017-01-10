@@ -28,6 +28,7 @@ public class VotingMachineActivateEmisionTests {
         votingMachine.setVotesDB(new ForbiddenVotesDB());
         votingMachine.setSignatureService(new ForbiddenSignatureService());
         votingMachine.setMailerService(new ForbiddenMailerService());
+        
         votingMachine.activateEmission(new ActivationCard("valid_code"));
         assertTrue(votingMachine.canVote());
     }
@@ -39,6 +40,7 @@ public class VotingMachineActivateEmisionTests {
         votingMachine.setVotesDB(new ForbiddenVotesDB());
         votingMachine.setSignatureService(new ForbiddenSignatureService());
         votingMachine.setMailerService(new ForbiddenMailerService());
+        
         votingMachine.activateEmission(new ActivationCard("invalid_code"));
         assertFalse(votingMachine.canVote());
     }

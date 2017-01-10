@@ -1,6 +1,8 @@
 package kiosk;
 
 import data.Vote;
+import mocks.ForbiddenMailerService;
+import mocks.ForbiddenSignatureService;
 import mocks.ValidationServiceOkay;
 import mocks.VotePrinterFake;
 import mocks.VotesDBFake;
@@ -32,6 +34,8 @@ public class VotingMachineVoteTests {
         votingMachine.setValidationService(new ValidationServiceOkay());
         votingMachine.setVotesDB(votesDB);
         votingMachine.setVotePrinter(new VotePrinterFake());
+        votingMachine.setSignatureService(new ForbiddenSignatureService());
+        votingMachine.setMailerService(new ForbiddenMailerService());
         votingMachine.activateEmission(new ActivationCard("valid_code"));
         votingMachine.vote(vote);
         assertEquals(vote, votesDB.lastVote);
@@ -49,6 +53,8 @@ public class VotingMachineVoteTests {
         votingMachine.setValidationService(new ValidationServiceOkay());
         votingMachine.setVotesDB(new VotesDBFake());
         votingMachine.setVotePrinter(new VotePrinterFake());
+        votingMachine.setSignatureService(new ForbiddenSignatureService());
+        votingMachine.setMailerService(new ForbiddenMailerService());
         votingMachine.activateEmission(new ActivationCard("valid_code"));
         votingMachine.vote(vote);
         votingMachine.vote(vote);
@@ -91,7 +97,7 @@ public class VotingMachineVoteTests {
         // Second Vote
         Vote vote2 = new Vote("any_party");
         votingMachine.activateEmission(
-                new ActivationCard("another_valid_corde"));
+                new ActivationCard("another_valid_code"));
         votingMachine.vote(vote2);
         
         // Check number of votes registered
