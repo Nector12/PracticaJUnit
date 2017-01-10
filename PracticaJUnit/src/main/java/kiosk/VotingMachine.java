@@ -69,7 +69,7 @@ public class VotingMachine {
     }
 
     public boolean canVote() {
-        return this.activated;
+        return this.activated && !this.hasVoted;
     }
 
     public void vote(Vote vote)
