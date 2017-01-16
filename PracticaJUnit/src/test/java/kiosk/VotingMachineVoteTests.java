@@ -1,6 +1,7 @@
 package kiosk;
 
 import data.Vote;
+import mocks.ForbiddenIrisScanner;
 import mocks.ForbiddenMailerService;
 import mocks.ForbiddenSignatureService;
 import mocks.ValidationServiceOkay;
@@ -25,6 +26,7 @@ public class VotingMachineVoteTests {
     @Before
     public void setUpVotingMachine() {
         votingMachine = new VotingMachine();
+        votingMachine.setIrisScanner(new ForbiddenIrisScanner());
     }
 
     @Test

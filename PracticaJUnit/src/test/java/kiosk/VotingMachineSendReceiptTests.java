@@ -3,6 +3,7 @@ package kiosk;
 import data.MailAddress;
 import data.Signature;
 import data.Vote;
+import mocks.ForbiddenIrisScanner;
 import mocks.ForbiddenMailerService;
 import mocks.ForbiddenSignatureService;
 import mocks.MailerServiceFake;
@@ -28,6 +29,7 @@ public class VotingMachineSendReceiptTests {
     @Before
     public void setUpVotingMachine() {
         this.votingMachine = new VotingMachine();
+        this.votingMachine.setIrisScanner(new ForbiddenIrisScanner());
         
     }
 
