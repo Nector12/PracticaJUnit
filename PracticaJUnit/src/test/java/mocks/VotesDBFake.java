@@ -1,6 +1,8 @@
 package mocks;
 
 import data.Vote;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -12,13 +14,18 @@ import data.Vote;
  */
 public class VotesDBFake extends ForbiddenVotesDB {
 
-    public Vote lastVote;
+    public List<Vote> votes = new ArrayList<>();
     public int nVotes = 0;
 
     @Override
     public void registerVote(Vote vote) {
-        this.lastVote = vote;
+        this.votes.add(vote);
         this.nVotes++;
+    }
+
+    @Override
+    public List<Vote> getVotes() {
+        return this.votes;
     }
 
 }

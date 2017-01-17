@@ -40,7 +40,7 @@ public class VotingMachineVoteTests {
         votingMachine.setMailerService(new ForbiddenMailerService());
         votingMachine.activateEmission(new ActivationCard("valid_code"));
         votingMachine.vote(vote);
-        assertEquals(vote, votesDB.lastVote);
+        assertEquals(vote, votesDB.votes.get(0));
     }
 
     @Test(expected = IllegalStateException.class)
@@ -108,7 +108,7 @@ public class VotingMachineVoteTests {
         } else if(votesDB.nVotes > 2) {
             fail("More than 2 votes registered");
         }
-        assertEquals(vote2, votesDB.lastVote);
+        assertEquals(vote2, votesDB.votes.get(0));
     }
 
 }
