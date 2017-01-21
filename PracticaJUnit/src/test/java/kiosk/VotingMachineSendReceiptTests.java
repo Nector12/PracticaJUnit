@@ -28,29 +28,25 @@ public class VotingMachineSendReceiptTests {
 
     @Before
     public void setUpVotingMachine() {
-        this.votingMachine = new VotingMachine();
-        this.votingMachine.setIrisScanner(new ForbiddenIrisScanner());
-
+        votingMachine = new VotingMachine();
+        votingMachine.setIrisScanner(new ForbiddenIrisScanner());
+        votingMachine.setValidationService(new ValidationServiceOkay());
+        votingMachine.setVotesDB(new VotesDBFake());
+        votingMachine.setVotePrinter(new VotePrinterFake());
     }
 
     @Test(expected = IllegalStateException.class)
     public void cannotSendIfMachineNotActivated() {
-        votingMachine.setValidationService(new ValidationServiceOkay());
-        votingMachine.setVotesDB(new VotesDBFake());
-        votingMachine.setVotePrinter(new VotePrinterFake());
         votingMachine.setSignatureService(new ForbiddenSignatureService());
         votingMachine.setMailerService(new ForbiddenMailerService());
         votingMachine.sendReceipt(new MailAddress("any_address"));
     }
 
     @Test(expected = IllegalStateException.class)
-    public void cannotSendIfNotVoted() {
-        votingMachine.setValidationService(new ValidationServiceOkay());
-        votingMachine.setVotesDB(new VotesDBFake());
-        votingMachine.setVotePrinter(new VotePrinterFake());
-        votingMachine.activateEmission(new ActivationCard("valid_code"));
+    public void cannotSendIfNotVoted() {        
         votingMachine.setSignatureService(new ForbiddenSignatureService());
         votingMachine.setMailerService(new ForbiddenMailerService());
+        votingMachine.activateEmission(new ActivationCard("valid_code"));
         votingMachine.sendReceipt(new MailAddress("any_address"));
     }
 
@@ -58,9 +54,6 @@ public class VotingMachineSendReceiptTests {
     public void sentToCorrectAddress() {
         MailerServiceFake mailerService = new MailerServiceFake();
         SignatureServiceFake signatureService = new SignatureServiceFake();
-        votingMachine.setValidationService(new ValidationServiceOkay());
-        votingMachine.setVotesDB(new VotesDBFake());
-        votingMachine.setVotePrinter(new VotePrinterFake());
         votingMachine.setMailerService(mailerService);
         votingMachine.setSignatureService(signatureService);
 
@@ -74,10 +67,6 @@ public class VotingMachineSendReceiptTests {
 
     @Test
     public void sentCorrectSignature() {
-        votingMachine.setValidationService(new ValidationServiceOkay());
-        votingMachine.setVotesDB(new VotesDBFake());
-        votingMachine.setVotePrinter(new VotePrinterFake());
-
         MailerServiceFake mailerService = new MailerServiceFake();
         SignatureServiceFake signatureService = new SignatureServiceFake();
         votingMachine.setMailerService(mailerService);
