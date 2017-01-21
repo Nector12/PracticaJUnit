@@ -43,11 +43,4 @@ public class VotingMachineCanVoteTests {
         assertFalse(votingMachine.canVote());
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void cannotActivateTwice() {
-        ActivationCard card = new ActivationCard("valid_code");
-        votingMachine.activateEmission(card);
-        votingMachine.activateEmission(card);
-    }
-
 }
