@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
  * @author rav3
  */
 public class VoteTest {
-    
+
     public VoteTest() {
     }
 
@@ -31,5 +31,5 @@ public class VoteTest {
         Vote sameVote = new Vote("Party 1");
         assertTrue(vote.equals(sameVote));
     }
-    
+
 }

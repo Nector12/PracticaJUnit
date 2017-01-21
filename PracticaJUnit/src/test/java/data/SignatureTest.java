@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
  * @author rav3
  */
 public class SignatureTest {
-    
+
     public SignatureTest() {
     }
 
@@ -36,5 +36,5 @@ public class SignatureTest {
         Signature sameSignature = new Signature(signatureBytes);
         assertTrue(signature.equals(sameSignature));
     }
-    
+
 }

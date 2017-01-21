@@ -23,7 +23,7 @@ public class VotingMachineActivateEmisionTests {
 
     public VotingMachineActivateEmisionTests() {
     }
-    
+
     @Before
     public void setUpVotingMachine() {
         votingMachine = new VotingMachine();
@@ -37,7 +37,7 @@ public class VotingMachineActivateEmisionTests {
 
     @Test
     public void correctlyActivatedEmission() {
-        votingMachine.setValidationService(new ValidationServiceOkay());       
+        votingMachine.setValidationService(new ValidationServiceOkay());
         votingMachine.activateEmission(new ActivationCard("valid_code"));
         assertTrue(votingMachine.canVote());
     }
@@ -45,50 +45,50 @@ public class VotingMachineActivateEmisionTests {
     @Test
     public void errorActivatingEmissionInvalidCode() {
         votingMachine.setValidationService(new ValidationServiceWrong());
-        
+
         votingMachine.activateEmission(new ActivationCard("invalid_code"));
         assertFalse(votingMachine.canVote());
     }
-    
+
     @Test
     public void activateEmissionWithIrisScan() {
         votingMachine.setValidationService(new ValidationServiceOkay());
         FakeIrisScanner irisScanner = new FakeIrisScanner();
         votingMachine.setIrisScanner(irisScanner);
-        
-        IrisScan iris = new IrisScan(new byte[]{1,2,3,4,5});
+
+        IrisScan iris = new IrisScan(new byte[]{1, 2, 3, 4, 5});
         ActivationCard card = new ActivationCard("some_code");
         card.setIrisScan(iris);
         votingMachine.activateEmission(card);
         assertTrue("Iris not scanned", irisScanner.scanned);
         assertTrue("Card not activated", votingMachine.canVote());
     }
-    
+
     @Test
     public void activateEmissionWithIrisScanCodesNotMatching() {
         votingMachine.setValidationService(new ValidationServiceOkay());
         FakeIrisScanner irisScanner = new FakeIrisScanner();
         votingMachine.setIrisScanner(irisScanner);
-        
-        IrisScan iris = new IrisScan(new byte[]{1,2,3,4,5,6,7,8,9,10});
+
+        IrisScan iris = new IrisScan(new byte[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
         ActivationCard card = new ActivationCard("some_code");
         card.setIrisScan(iris);
         votingMachine.activateEmission(card);
         assertTrue("Iris not scanned", irisScanner.scanned);
         assertFalse("Card not activated", votingMachine.canVote());
     }
-    
+
     private static class FakeIrisScanner extends ForbiddenIrisScanner {
 
         public boolean scanned = false;
-        
+
         @Override
         public IrisScan scan() {
             scanned = true;
-            IrisScan iris = new IrisScan(new byte[]{1,2,3,4,5});
+            IrisScan iris = new IrisScan(new byte[]{1, 2, 3, 4, 5});
             return iris;
         }
-        
+
     }
 
 }

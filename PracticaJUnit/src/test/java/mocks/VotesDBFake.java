@@ -9,8 +9,7 @@ import java.util.List;
  * @author rav3
  */
 /**
- * Mock of VotesDB
- * Used to test if the correct Vote is registered
+ * Mock of VotesDB Used to test if the correct Vote is registered
  */
 public class VotesDBFake extends ForbiddenVotesDB {
 

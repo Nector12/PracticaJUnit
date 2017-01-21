@@ -83,29 +83,29 @@ public class VotingMachineVoteTests {
         votingMachine.vote(new Vote("any_party"));
         assertEquals(votePrinter.printed, 1);
     }
-    
+
     @Test
     public void consecutiveVaildVotes() {
         VotesDBFake votesDB = new VotesDBFake();
         votingMachine.setValidationService(new ValidationServiceOkay());
         votingMachine.setVotesDB(votesDB);
         votingMachine.setVotePrinter(new VotePrinterFake());
-        
+
         // First Vote
         votingMachine.activateEmission(
                 new ActivationCard("valid_code"));
         votingMachine.vote(new Vote("any_party"));
-        
+
         // Second Vote
         Vote vote2 = new Vote("any_party");
         votingMachine.activateEmission(
                 new ActivationCard("another_valid_code"));
         votingMachine.vote(vote2);
-        
+
         // Check number of votes registered
-        if(votesDB.nVotes < 2) {
+        if (votesDB.nVotes < 2) {
             fail("Less than 2 votes registered");
-        } else if(votesDB.nVotes > 2) {
+        } else if (votesDB.nVotes > 2) {
             fail("More than 2 votes registered");
         }
         assertEquals(vote2, votesDB.votes.get(0));

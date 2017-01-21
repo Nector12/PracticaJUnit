@@ -30,7 +30,7 @@ public class VotingMachineSendReceiptTests {
     public void setUpVotingMachine() {
         this.votingMachine = new VotingMachine();
         this.votingMachine.setIrisScanner(new ForbiddenIrisScanner());
-        
+
     }
 
     @Test(expected = IllegalStateException.class)
@@ -40,7 +40,7 @@ public class VotingMachineSendReceiptTests {
         votingMachine.setVotePrinter(new VotePrinterFake());
         votingMachine.setSignatureService(new ForbiddenSignatureService());
         votingMachine.setMailerService(new ForbiddenMailerService());
-        votingMachine.sendReceipt(new MailAddress("any_address"));        
+        votingMachine.sendReceipt(new MailAddress("any_address"));
     }
 
     @Test(expected = IllegalStateException.class)
@@ -63,9 +63,9 @@ public class VotingMachineSendReceiptTests {
         votingMachine.setVotePrinter(new VotePrinterFake());
         votingMachine.setMailerService(mailerService);
         votingMachine.setSignatureService(signatureService);
-        
+
         MailAddress address = new MailAddress("any_address");
-        
+
         votingMachine.activateEmission(new ActivationCard("valid_code"));
         votingMachine.vote(new Vote("any_party"));
         votingMachine.sendReceipt(address);
@@ -77,15 +77,15 @@ public class VotingMachineSendReceiptTests {
         votingMachine.setValidationService(new ValidationServiceOkay());
         votingMachine.setVotesDB(new VotesDBFake());
         votingMachine.setVotePrinter(new VotePrinterFake());
-        
+
         MailerServiceFake mailerService = new MailerServiceFake();
         SignatureServiceFake signatureService = new SignatureServiceFake();
         votingMachine.setMailerService(mailerService);
         votingMachine.setSignatureService(signatureService);
-        
+
         Signature expected = new Signature(
-                new byte[]{1,2,3,4,5,6,7,8,9});
-        
+                new byte[]{1, 2, 3, 4, 5, 6, 7, 8, 9});
+
         votingMachine.activateEmission(new ActivationCard("valid_code"));
         votingMachine.vote(new Vote("any_party"));
         votingMachine.sendReceipt(new MailAddress("any_address"));

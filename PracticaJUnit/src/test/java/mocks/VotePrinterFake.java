@@ -7,8 +7,7 @@ import data.Vote;
  * @author rav3
  */
 /**
- * Mock of VotePrinter service
- * Used to test if the vote is printed
+ * Mock of VotePrinter service Used to test if the vote is printed
  */
 public class VotePrinterFake extends ForbiddenVotePrinter {
 
@@ -18,5 +17,5 @@ public class VotePrinterFake extends ForbiddenVotePrinter {
     public void print(Vote vote) {
         this.printed++;
     }
-    
+
 }

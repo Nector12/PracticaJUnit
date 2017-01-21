@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
  * @author rav3
  */
 public class PartyTest {
-    
+
     public PartyTest() {
     }
 
@@ -31,5 +31,5 @@ public class PartyTest {
         Party sameParty = new Party("Party");
         assertTrue(party.equals(sameParty));
     }
-    
+
 }
