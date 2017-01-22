@@ -12,6 +12,7 @@ import mocks.ValidationServiceWrong;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import services.ValidationService;
 
 /**
  *
@@ -52,6 +53,7 @@ public class VotingMachineActivateEmisionTests {
     
     @Test(expected = IllegalStateException.class)
     public void cannotActivateTwice() {
+        votingMachine.setValidationService(new ValidationServiceOkay());
         ActivationCard card = new ActivationCard("valid_code");
         votingMachine.activateEmission(card);
         votingMachine.activateEmission(card);
